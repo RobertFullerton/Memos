@@ -28,8 +28,9 @@ a,
   }
 
   #app {
-    display: grid;
+    /* display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1rf 1rf; */
     padding: 0 2rem;
   }
 }
