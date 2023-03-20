@@ -119,6 +119,7 @@ button {
   flex-direction: column;
   margin-right: 20px;
   margin-bottom: 20px;
+  background-color: #222222;
 }
 .card-container {
   display: flex;
