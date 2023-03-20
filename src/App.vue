@@ -1,26 +1,51 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
+import Nav from "../components/nav.vue";
 
 const showModel = ref(false);
 const newMemo = ref("");
 const newTitle = ref("");
 const memos = ref([]);
 
+const memoAsc = computed(() => memos.value.sort((a, b) =>{
+  return b.title - a.title
+}))
+
+// setting memo arry into local storage
+
+watch(memos, (newVal) => {
+  localStorage.setItem('memos', JSON.stringify(newVal))
+}, {deep: true})
+
+onMounted( () => {
+  memos.value = JSON.parse(localStorage.getItem('memos')) || []
+})
+
+
 const addMemo = () => {
   memos.value.push({
     id: Math.floor(Math.random() * 100),
     input: newTitle.value,
     text: newMemo.value,
-    date: new Date(),
+    date: new Date().toLocaleDateString("en-US"),
  });
  showModel.value = false;
  newMemo.value = ""
  newTitle.value = ""
+ 
+}
+
+//removing a memo
+
+const removeMemo = memo  => {
+  memos.value = memos.value.filter(m => m !== memo)
+
 }
 </script>
 
 <template>
-  <h1>Keep track of import memos</h1>
+  <!-- <Nav /> -->
+  <h2>Keep track of import memos</h2>
   <header>
     <div v-if="showModel" class="add_modal_screen">
       <div class="modal">
@@ -45,11 +70,12 @@ const addMemo = () => {
     <p class="your_memos">Memos:</p>
     <div class="card-container">
       <div v-for="memo in memos" class="card">
-        <p class="date">{{ memo.date.toLocaleDateString("en-US") }}</p>
+        <p class="date">{{ memo.date }}</p>
         <p class="memo_title">Title: {{ memo.input }}</p>
         <p class="main_text">Memo:
           {{ memo.text }}</p>
-        <button class="del_button">Delete</button>
+        <button @click="removeMemo(memo)" class="del_button">Done</button>
+  
       </div>
     </div>
   </main>
@@ -60,7 +86,7 @@ const addMemo = () => {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(24, 24, 24, 0.8);
+  background-color: #181818cc;
   z-index: 400;
   display: flex;
   align-items: center;
@@ -121,7 +147,7 @@ button {
 .leadText {
   font-weight: bold;
   font-size: 25px;
-  color: coral;
+  color: #ff7f50;
 }
 .memo_title {
   color: coral;
@@ -129,12 +155,13 @@ button {
   padding-bottom: 10px;
 }
 .modal {
-  width: 700px;
+  width: 900px;
+  height: 500px;
   border-radius: 10px;
   background-color: #535353;
   border: #4f9c7a;
   border-style: solid;
-  position: inherit;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
