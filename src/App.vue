@@ -119,13 +119,13 @@ button {
   flex-direction: column;
   margin-right: 20px;
   margin-bottom: 20px;
-  background-color: #222222;
 }
 .card-container {
   display: flex;
   width: 100%;
   grid-template-columns: 10px 1fr;
   margin-top: 20px;
+  background-color: #222222;
 }
 .date {
   font-size: small;
