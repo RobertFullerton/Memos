@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted, computed } from "vue";
 import Nav from "../components/nav.vue";
+import footer from '../components/footer.vue'
 
 const showModel = ref(false);
 const newMemo = ref("");
@@ -78,7 +79,9 @@ const removeMemo = memo  => {
   
       </div>
     </div>
+    <footer />
   </main>
+
 </template>
 
 <style scoped>
@@ -108,8 +111,8 @@ button {
   cursor: pointer;
 }
 .card {
-  width: 200px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   border: 3px;
   border-color: coral;
   border-style: solid;
@@ -119,11 +122,12 @@ button {
   flex-direction: column;
   margin-right: 20px;
   margin-bottom: 20px;
+  background-color: #222222;
 }
 .card-container {
   display: flex;
   width: 100%;
-  grid-template-columns: 10px 1fr;
+  /* grid-template-columns: 1px 1fr; */
   margin-top: 20px;
   background-color: #222222;
 }
